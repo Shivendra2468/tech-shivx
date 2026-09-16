@@ -417,6 +417,21 @@ function setupAuthModal() {
     closeBtn.addEventListener('click', () => modal.classList.remove('active'));
   }
 
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.remove('active');
+    });
+  }
+
+  const googleModal = document.getElementById('google-oauth-modal');
+  if (googleModal) {
+    googleModal.addEventListener('click', (e) => {
+      if (e.target === googleModal) {
+        window.authManager.closeGoogleModal();
+      }
+    });
+  }
+
   // Switch between Login and Register Tabs
   const tabLogin = document.getElementById('tab-btn-auth-login');
   const tabRegister = document.getElementById('tab-btn-auth-register');

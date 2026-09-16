@@ -152,38 +152,145 @@ class AuthManager {
     if (window.cyberAudio) window.cyberAudio.playHoverSound();
   }
 
-  async loginWithGoogle() {
-    let email = prompt('Sign in with Google - Enter your Google email:', 'shiv.creator@gmail.com');
-    if (!email) return;
-    email = email.trim().toLowerCase();
-    if (!email.includes('@')) {
-      if (typeof showToast === 'function') showToast('Please enter a valid Google email address.', 'error');
+  closeAuthModal() {
+    const modal = document.getElementById('auth-modal');
+    if (modal) modal.classList.remove('active');
+  }
+
+  openGoogleModal() {
+    this.closeAuthModal();
+    const modal = document.getElementById('google-oauth-modal');
+    if (!modal) return;
+    this.backToGoogleAccounts();
+    modal.classList.add('active');
+    if (window.cyberAudio) window.cyberAudio.playHoverSound();
+  }
+
+  closeGoogleModal() {
+    const modal = document.getElementById('google-oauth-modal');
+    if (modal) modal.classList.remove('active');
+    this.selectedGoogleAccount = null;
+  }
+
+  selectGoogleAccount(name, email, color = '#1a73e8') {
+    this.selectedGoogleAccount = { name, email, color };
+
+    const nameEl = document.getElementById('google-consent-name');
+    const emailEl = document.getElementById('google-consent-email');
+    const avatarEl = document.getElementById('google-consent-avatar');
+
+    if (nameEl) nameEl.textContent = name;
+    if (emailEl) emailEl.textContent = email;
+    if (avatarEl) {
+      avatarEl.textContent = (name && name.length) ? name.charAt(0).toUpperCase() : 'G';
+      avatarEl.style.background = color;
+    }
+
+    const step1 = document.getElementById('google-step-accounts');
+    const step2 = document.getElementById('google-step-consent');
+    if (step1) step1.style.display = 'none';
+    if (step2) step2.style.display = 'block';
+
+    if (window.cyberAudio) window.cyberAudio.playHoverSound();
+  }
+
+  toggleOtherAccountInput() {
+    const form = document.getElementById('google-other-account-form');
+    const input = document.getElementById('google-custom-email-input');
+    const err = document.getElementById('google-custom-error');
+    if (!form) return;
+    if (form.style.display === 'none' || !form.style.display) {
+      form.style.display = 'block';
+      if (err) err.style.display = 'none';
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+    } else {
+      form.style.display = 'none';
+    }
+  }
+
+  submitCustomGoogleAccount() {
+    const input = document.getElementById('google-custom-email-input');
+    const err = document.getElementById('google-custom-error');
+    if (!input) return;
+    const email = input.value.trim().toLowerCase();
+    if (!email || !email.includes('@') || !email.includes('.')) {
+      if (err) err.style.display = 'block';
       return;
     }
+    if (err) err.style.display = 'none';
 
     let defaultName = email.split('@')[0].replace(/[._]/g, ' ');
     defaultName = defaultName.split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
 
-    const users = await window.vaultStorage.getAll('users');
-    let user = users.find(u => u.email === email);
-    if (!user) {
-      user = {
-        name: defaultName,
-        email: email,
-        provider: 'google',
-        registeredAt: new Date().toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
-        downloadsCount: 0
-      };
-      await window.vaultStorage.add('users', user);
-      await this.addSubscriber(email, defaultName, 'Google Sign-In');
-    }
+    this.selectGoogleAccount(defaultName, email, '#0f9d58');
+  }
 
-    this.setCurrentSession(user);
-    this.closeAuthModal();
-    if (typeof showToast === 'function') {
-      showToast(`Signed in with Google as ${user.name}!`);
+  backToGoogleAccounts() {
+    const step1 = document.getElementById('google-step-accounts');
+    const step2 = document.getElementById('google-step-consent');
+    const form = document.getElementById('google-other-account-form');
+    if (step1) step1.style.display = 'block';
+    if (step2) step2.style.display = 'none';
+    if (form) form.style.display = 'none';
+  }
+
+  async confirmGoogleSignIn() {
+    if (!this.selectedGoogleAccount) return;
+    const { name, email } = this.selectedGoogleAccount;
+
+    const spinner = document.getElementById('google-continue-spinner');
+    const btnText = document.getElementById('google-continue-text');
+    const btn = document.getElementById('btn-google-confirm-continue');
+
+    if (spinner) spinner.style.display = 'inline-block';
+    if (btnText) btnText.textContent = 'Verifying Google Account...';
+    if (btn) btn.disabled = true;
+
+    // Simulate authentic Google authorization response time (400ms)
+    await new Promise(resolve => setTimeout(resolve, 400));
+
+    try {
+      const users = await window.vaultStorage.getAll('users');
+      let user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+
+      if (!user) {
+        user = {
+          name: name,
+          email: email,
+          provider: 'google',
+          registeredAt: new Date().toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+          downloadsCount: 0
+        };
+        await window.vaultStorage.add('users', user);
+        await this.addSubscriber(email, name, 'Google Sign-In');
+      }
+
+      this.setCurrentSession(user);
+      this.closeGoogleModal();
+      this.closeAuthModal();
+
+      if (typeof showToast === 'function') {
+        showToast(`Signed in with Google as ${user.name}!`);
+      }
+      if (window.cyberAudio) window.cyberAudio.playSuccessChime();
+
+    } catch (err) {
+      console.error('Google Sign-In error:', err);
+      if (typeof showToast === 'function') {
+        showToast('Google Sign-In encountered an issue. Please try again.', 'error');
+      }
+    } finally {
+      if (spinner) spinner.style.display = 'none';
+      if (btnText) btnText.textContent = 'Continue';
+      if (btn) btn.disabled = false;
     }
-    if (window.cyberAudio) window.cyberAudio.playSuccessChime();
+  }
+
+  loginWithGoogle() {
+    this.openGoogleModal();
   }
 
   updateNavbarAuthUI() {
