@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TECH SHIVX — Futuristic 3D Cyber Vault & Media Portal</title>
+  <meta name="description" content="Experience the ultimate 3D purple cybernetic portal. Stream high-octane YouTube videos, explore ultra-detailed 8K wallpapers, discover cutting-edge apps, and manage files in the secure TECH SHIVX Vault.">
+  <meta name="theme-color" content="#0a0316">
+
+  <!-- Phosphor Icons CDN -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <!-- Three.js 3D Graphics Engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+  <!-- Three.js Background 3D Canvas (Cosmic Nebula & Cyber Waves) -->
+  <canvas id="webgl-canvas"></canvas>
+
+  <!-- Ambient Purple Neon Glow Spotlights -->
+  <div class="cyber-spotlight-top"></div>
+  <div class="cyber-grid-overlay"></div>
+
+  <!-- Dynamic Announcement Bar (Editable from Admin Panel) -->
+  <div class="top-announcement-bar" id="top-announcement-bar">
+    <i class="ph ph-sparkle"></i>
+    <span id="top-announcement-text">🚀 Welcome to TECH SHIVX 3D Platform! Register for free to unlock all downloads.</span>
+  </div>
+
+  <!-- ========================================================================
+       SITE HEADER & NAVIGATION
+       ======================================================================== -->
+  <header class="site-header">
+    <div class="container">
+      <div class="nav-wrapper">
+        <!-- Brand Logo with Custom 3D Emblem -->
+        <a href="#hero" class="brand-logo" id="logo-link">
+          <div class="logo-img-wrap">
+            <img src="assets/images/tech_shivx_logo.png" alt="TECH SHIVX Logo" class="brand-emblem-img">
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">TECH SHIVX</span>
+            <span class="brand-tag">3D Cyber Portal</span>
+          </div>
+        </a>
+
+        <!-- Desktop Nav Links -->
+        <nav>
+          <ul class="nav-menu">
+            <li><a href="#hero" class="nav-link active"><i class="ph ph-house"></i> Home</a></li>
+            <li><a href="#videos-section" class="nav-link"><i class="ph ph-youtube-logo"></i> Videos</a></li>
+            <li><a href="#gallery-section" class="nav-link"><i class="ph ph-images"></i> Pics</a></li>
+            <li><a href="#apps-section" class="nav-link"><i class="ph ph-browsers"></i> Apps</a></li>
+            <li><a href="#files-section" class="nav-link"><i class="ph ph-folder"></i> Files</a></li>
+          </ul>
+        </nav>
+
+        <!-- Nav Controls & Auth Area -->
+        <div class="nav-actions">
+          <!-- Audio Synthesizer Toggle -->
+          <button id="audio-toggle-btn" class="btn-icon" title="Toggle Cyber Sound Effects">
+            <i class="ph ph-speaker-slash"></i>
+          </button>
+
+          <!-- User Authentication Area (Login/Register or User Pill) -->
+          <div id="nav-auth-area">
+            <!-- Rendered dynamically by auth.js -->
+          </div>
+
+          <!-- Studio Upload Trigger -->
+          <button class="btn-primary open-studio-btn" id="nav-upload-btn">
+            <i class="ph ph-plus-bold"></i>
+            <span>Upload</span>
+          </button>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button class="mobile-menu-toggle" id="mobile-menu-btn" title="Open Navigation Menu">
+            <i class="ph ph-list"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       MOBILE NAVIGATION SLIDE DRAWER (100% Phone Friendly)
+       ======================================================================== -->
+  <div class="mobile-nav-drawer" id="mobile-nav-drawer">
+    <div class="drawer-header">
+      <div class="brand-logo">
+        <div class="logo-img-wrap" style="width: 38px; height: 38px;">
+          <img src="assets/images/tech_shivx_logo.png" alt="Logo" class="brand-emblem-img">
+        </div>
+        <span class="brand-name" style="font-size: 1.15rem;">TECH SHIVX</span>
+      </div>
+      <button class="btn-icon" id="close-drawer-btn"><i class="ph ph-x"></i></button>
+    </div>
+
+    <!-- Mobile Drawer Auth Profile / Login Area -->
+    <div id="drawer-auth-area"></div>
+
+    <ul class="drawer-links">
+      <li><a href="#hero" class="drawer-link"><i class="ph ph-house"></i> Home Core</a></li>
+      <li><a href="#videos-section" class="drawer-link"><i class="ph ph-youtube-logo"></i> YouTube Hub</a></li>
+      <li><a href="#gallery-section" class="drawer-link"><i class="ph ph-images"></i> 8K Wallpapers</a></li>
+      <li><a href="#apps-section" class="drawer-link"><i class="ph ph-browsers"></i> Custom Apps</a></li>
+      <li><a href="#files-section" class="drawer-link"><i class="ph ph-folder"></i> Files Vault</a></li>
+      <li><a href="#newsletter-section" class="drawer-link"><i class="ph ph-envelope-simple"></i> Subscribe</a></li>
+      <li><a href="admin.html" target="_blank" class="drawer-link" style="color: var(--neon-cyan);"><i class="ph ph-shield-check"></i> Admin Portal</a></li>
+    </ul>
+
+    <div style="display: flex; justify-content: center; gap: 10px; margin: 18px 0 6px;">
+      <a href="https://youtube.com" target="_blank" class="btn-icon social-link-youtube" title="YouTube"><i class="ph ph-youtube-logo" style="color: #ef4444;"></i></a>
+      <a href="https://instagram.com" target="_blank" class="btn-icon social-link-instagram" title="Instagram"><i class="ph ph-instagram-logo" style="color: #ec4899;"></i></a>
+      <a href="https://wa.me/" target="_blank" class="btn-icon social-link-whatsapp" title="WhatsApp"><i class="ph ph-whatsapp-logo" style="color: #22c55e;"></i></a>
+      <a href="https://t.me" target="_blank" class="btn-icon social-link-telegram" title="Telegram"><i class="ph ph-telegram-logo" style="color: #38bdf8;"></i></a>
+      <a href="https://x.com" target="_blank" class="btn-icon social-link-twitter" title="Twitter"><i class="ph ph-x-logo"></i></a>
+    </div>
+
+    <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(168, 85, 247, 0.2);">
+      <button class="btn-primary" style="width: 100%;" onclick="document.getElementById('mobile-nav-drawer').classList.remove('open'); openStudioTab('tab-video');">
+        <i class="ph ph-cloud-arrow-up"></i> Upload Studio
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       GRAND HERO SECTION
+       ======================================================================== -->
+  <section class="hero-section" id="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <!-- Live Status Pill -->
+        <div class="hero-badge">
+          <span class="pulse-dot"></span>
+          <span class="hero-badge-text">TECH SHIVX // NEXT-GEN 3D CREATOR PORTAL</span>
+        </div>
+
+        <!-- Grand Headline (Dynamic from Admin Panel) -->
+        <h1 class="hero-title" id="hero-main-title">
+          THE ULTIMATE <span class="gradient-text-purple">3D PURPLE VAULT</span><br>
+          FOR YOUR <span class="gradient-text-neon">VIDEOS, APPS & FILES.</span>
+        </h1>
+
+        <!-- Subtitle (Dynamic from Admin Panel) -->
+        <p class="hero-description" id="hero-main-subtitle">
+          A seamless cybernetic portfolio and cloud depot. Stream YouTube masterclasses, explore 8K wallpapers, launch custom software, and upload personal files directly into your persistent browser vault.
+        </p>
+
+        <!-- Hero Action Buttons -->
+        <div class="hero-cta-group">
+          <a href="#videos-section" class="btn-primary">
+            <i class="ph ph-play-circle-fill" style="font-size: 1.25rem;"></i>
+            <span>Explore Media Vault</span>
+          </a>
+          <button class="btn-secondary open-studio-btn">
+            <i class="ph ph-cloud-arrow-up" style="font-size: 1.25rem; color: var(--purple-bright);"></i>
+            <span>+ Quick Upload Studio</span>
+          </button>
+        </div>
+
+        <!-- 4 Pillars of the Vault (Interactive Live Stats Cards) -->
+        <div class="hero-pillars-grid">
+          <a href="#videos-section" class="pillar-card tilt-card">
+            <div class="pillar-icon-box" style="color: #ef4444; border-color: rgba(239, 68, 68, 0.4);">
+              <i class="ph ph-youtube-logo"></i>
+            </div>
+            <span class="pillar-count" id="stat-videos-count">3</span>
+            <span class="pillar-name">YouTube Videos</span>
+            <span class="pillar-sub">Stream & Tutorials</span>
+          </a>
+
+          <a href="#gallery-section" class="pillar-card tilt-card">
+            <div class="pillar-icon-box" style="color: var(--neon-cyan); border-color: rgba(56, 189, 248, 0.4);">
+              <i class="ph ph-images"></i>
+            </div>
+            <span class="pillar-count" id="stat-photos-count">3</span>
+            <span class="pillar-name">8K Wallpapers</span>
+            <span class="pillar-sub">Pics & Artwork</span>
+          </a>
+
+          <a href="#apps-section" class="pillar-card tilt-card">
+            <div class="pillar-icon-box" style="color: var(--purple-bright); border-color: rgba(192, 132, 252, 0.4);">
+              <i class="ph ph-browsers"></i>
+            </div>
+            <span class="pillar-count" id="stat-apps-count">3</span>
+            <span class="pillar-name">Custom Software</span>
+            <span class="pillar-sub">Apps & Scripts</span>
+          </a>
+
+          <a href="#files-section" class="pillar-card tilt-card">
+            <div class="pillar-icon-box" style="color: #e879f9; border-color: rgba(232, 121, 249, 0.4);">
+              <i class="ph ph-hard-drives"></i>
+            </div>
+            <span class="pillar-count" id="stat-files-count">3</span>
+            <span class="pillar-name">Vault Files</span>
+            <span class="pillar-sub">Downloads & Assets</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       MONETIZATION / ADSENSE LEADERBOARD SLOT 1
+       ======================================================================== -->
+  <div class="ad-slot-wrapper">
+    <div class="ad-slot-card">
+      <div class="ad-label">Advertisement</div>
+      <div class="ad-placeholder-content">
+        <i class="ph ph-megaphone" style="font-size: 1.2rem;"></i>
+        <span>AdSense Leaderboard Placement (728x90) // Monetization Ready Slot</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       SECTION 1: YOUTUBE VIDEOS HUB
+       ======================================================================== -->
+  <section class="section-wrapper" id="videos-section">
+    <div class="container">
+      <div class="section-header-row">
+        <div>
+          <span class="section-tag"><i class="ph ph-film-strip"></i> Stream Vault</span>
+          <h2 class="section-heading">YouTube Video Hub</h2>
+          <p class="section-subtitle">Watch tutorials, tech breakdowns, and gameplay videos in our cinematic player.</p>
+        </div>
+
+        <div class="filter-tabs-row">
+          <button class="filter-btn active" data-video-filter="all">All Videos</button>
+          <button class="filter-btn" data-video-filter="Coding & AI">AI & Coding</button>
+          <button class="filter-btn" data-video-filter="Tutorials">Tutorials</button>
+          <button class="filter-btn" data-video-filter="Gaming">Gaming</button>
+        </div>
+      </div>
+
+      <div class="search-control-bar">
+        <div class="search-input-wrap">
+          <i class="ph ph-magnifying-glass"></i>
+          <input type="text" id="search-videos" class="search-input" placeholder="Search videos by title or tags...">
+        </div>
+        <button class="btn-secondary" onclick="openStudioTab('tab-video')">
+          <i class="ph ph-plus-circle"></i> Add YouTube Video
+        </button>
+      </div>
+
+      <div class="videos-grid" id="videos-container">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       MONETIZATION / ADSENSE MID-CONTENT SLOT 2
+       ======================================================================== -->
+  <div class="ad-slot-wrapper">
+    <div class="ad-slot-card">
+      <div class="ad-label">Advertisement</div>
+      <div class="ad-placeholder-content">
+        <i class="ph ph-broadcast" style="font-size: 1.2rem;"></i>
+        <span>Responsive In-Feed Banner (AdSense & Sponsor Compliant Slot)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       SECTION 2: PICS & WALLPAPERS GALLERY
+       ======================================================================== -->
+  <section class="section-wrapper" id="gallery-section">
+    <div class="container">
+      <div class="section-header-row">
+        <div>
+          <span class="section-tag"><i class="ph ph-aperture"></i> Visual Showcase</span>
+          <h2 class="section-heading">Pics & 3D Wallpapers</h2>
+          <p class="section-subtitle">Ultra-crisp 8K futuristic concept art, render captures, and high-res photography.</p>
+        </div>
+
+        <div class="filter-tabs-row">
+          <button class="filter-btn active" data-photo-filter="all">All Pics</button>
+          <button class="filter-btn" data-photo-filter="3D Wallpapers">3D Wallpapers</button>
+          <button class="filter-btn" data-photo-filter="Cyberpunk">Cyberpunk</button>
+          <button class="filter-btn" data-photo-filter="Concept Art">Concept Art</button>
+        </div>
+      </div>
+
+      <div class="search-control-bar">
+        <div class="search-input-wrap">
+          <i class="ph ph-magnifying-glass"></i>
+          <input type="text" id="search-photos" class="search-input" placeholder="Filter wallpapers & pictures...">
+        </div>
+        <button class="btn-secondary" onclick="openStudioTab('tab-photo')">
+          <i class="ph ph-upload-simple"></i> Upload Picture
+        </button>
+      </div>
+
+      <div class="gallery-grid" id="gallery-container">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 3: APPS & PROJECTS SHOWCASE
+       ======================================================================== -->
+  <section class="section-wrapper" id="apps-section">
+    <div class="container">
+      <div class="section-header-row">
+        <div>
+          <span class="section-tag"><i class="ph ph-terminal"></i> Software Depot</span>
+          <h2 class="section-heading">Apps & Projects</h2>
+          <p class="section-subtitle">Discover custom-built web apps, desktop tools, and automation scripts (Protected Downloads).</p>
+        </div>
+
+        <div class="filter-tabs-row">
+          <button class="filter-btn active" data-app-filter="all">All Apps</button>
+          <button class="filter-btn" data-app-filter="Windows">Windows</button>
+          <button class="filter-btn" data-app-filter="Web App">Web Apps</button>
+          <button class="filter-btn" data-app-filter="Python">Python</button>
+        </div>
+      </div>
+
+      <div class="search-control-bar">
+        <div class="search-input-wrap">
+          <i class="ph ph-magnifying-glass"></i>
+          <input type="text" id="search-apps" class="search-input" placeholder="Search applications & tools...">
+        </div>
+        <button class="btn-secondary" onclick="openStudioTab('tab-app')">
+          <i class="ph ph-plus-circle"></i> Add New Software
+        </button>
+      </div>
+
+      <div class="apps-grid" id="apps-container">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 4: FILES & DOWNLOADS VAULT
+       ======================================================================== -->
+  <section class="section-wrapper" id="files-section">
+    <div class="container">
+      <div class="section-header-row">
+        <div>
+          <span class="section-tag"><i class="ph ph-hard-drives"></i> Secure Archive</span>
+          <h2 class="section-heading">Files & Downloads Vault</h2>
+          <p class="section-subtitle">Download bundles, assets, LUTs, and upload personal files directly to browser storage (Protected Downloads).</p>
+        </div>
+      </div>
+
+      <div class="files-vault-container">
+        <div class="file-dropzone" id="main-file-dropzone">
+          <input type="file" id="direct-file-input" style="display: none;">
+          <div class="dropzone-icon"><i class="ph ph-cloud-arrow-up"></i></div>
+          <h3 class="dropzone-title">Drag & Drop Any File Here</h3>
+          <p class="dropzone-hint">Or click to browse from your computer (.zip, .pdf, .exe, .apk, .png, etc.)</p>
+        </div>
+
+        <div class="search-control-bar" style="margin-bottom: 20px;">
+          <div class="search-input-wrap">
+            <i class="ph ph-magnifying-glass"></i>
+            <input type="text" id="search-files" class="search-input" placeholder="Search files by name...">
+          </div>
+        </div>
+
+        <div class="files-table-wrapper">
+          <table class="files-table">
+            <thead>
+              <tr>
+                <th>File Name & Details</th>
+                <th>Type</th>
+                <th>Size</th>
+                <th>Date Added</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="files-table-body">
+              <!-- Rendered dynamically by app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       EMAIL NEWSLETTER SUBSCRIPTION SECTION
+       ======================================================================== -->
+  <section class="newsletter-section" id="newsletter-section">
+    <div class="container">
+      <div class="newsletter-box">
+        <h3 class="newsletter-title">Subscribe to the TECH SHIVX Dispatch</h3>
+        <p class="newsletter-desc">
+          Get exclusive early access to custom software releases, 8K cyber wallpapers, source code archives, and YouTube tech masterclasses directly to your inbox.
+        </p>
+
+        <form class="newsletter-form" id="newsletter-subscribe-form">
+          <input type="email" id="newsletter-email-input" class="newsletter-input" placeholder="Enter your best email address..." required>
+          <button type="submit" class="btn-primary">
+            <i class="ph ph-paper-plane-tilt-fill"></i>
+            <span>Subscribe Free</span>
+          </button>
+        </form>
+        <small style="color: var(--text-muted); font-size: 0.8rem;">🔒 Zero spam. Unsubscribe with one click anytime.</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       USER AUTHENTICATION MODAL (Login / Register Gatekeeper)
+       ======================================================================== -->
+  <div class="modal-backdrop" id="auth-modal">
+    <div class="modal-box" style="max-width: 480px; padding: 36px 30px;">
+      <button class="modal-close-btn" id="close-auth-btn"><i class="ph ph-x"></i></button>
+
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div class="logo-img-wrap" style="margin: 0 auto 12px; width: 56px; height: 56px;">
+          <img src="assets/images/tech_shivx_logo.png" alt="Logo" class="brand-emblem-img">
+        </div>
+        <h2 style="font-family: var(--font-heading); font-size: 1.6rem; color: #fff;">TECH SHIVX Portal</h2>
+      </div>
+
+      <!-- Notice Box for Protected Downloads -->
+      <div class="auth-notice-box" id="auth-modal-notice">
+        Access Required: Please sign in or register to download this resource!
+      </div>
+
+      <!-- Quick 1-Click Google Sign-In / Register Button -->
+      <button type="button" class="btn-google-auth" id="btn-google-auth" onclick="window.authManager.loginWithGoogle()">
+        <svg width="20" height="20" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+        </svg>
+        <span>Continue with Google</span>
+      </button>
+
+      <div class="auth-divider">
+        <span>OR CONTINUE WITH EMAIL</span>
+      </div>
+
+      <!-- Auth Tabs Header -->
+      <div class="auth-tabs-row">
+        <button class="auth-tab-btn active" id="tab-btn-auth-login">Sign In</button>
+        <button class="auth-tab-btn" id="tab-btn-auth-register">Create Account</button>
+      </div>
+
+      <!-- Login Pane -->
+      <div id="auth-pane-login">
+        <form id="form-auth-login">
+          <div class="form-group">
+            <label class="form-label" for="login-email-input">Email Address</label>
+            <input type="email" id="login-email-input" class="form-control" placeholder="name@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="login-password-input">Password</label>
+            <input type="password" id="login-password-input" class="form-control" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">
+            <i class="ph ph-sign-in"></i> Sign In to Vault
+          </button>
+        </form>
+      </div>
+
+      <!-- Register Pane -->
+      <div id="auth-pane-register" style="display: none;">
+        <form id="form-auth-register">
+          <div class="form-group">
+            <label class="form-label" for="register-name-input">Your Full Name</label>
+            <input type="text" id="register-name-input" class="form-control" placeholder="e.g. Shiv Kumar" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="register-email-input">Email Address</label>
+            <input type="email" id="register-email-input" class="form-control" placeholder="name@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="register-password-input">Create Password</label>
+            <input type="password" id="register-password-input" class="form-control" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">
+            <i class="ph ph-user-plus"></i> Register & Subscribe Free
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       CREATOR STUDIO MODAL (Upload & Manage Everything)
+       ======================================================================== -->
+  <div class="modal-backdrop" id="studio-modal">
+    <div class="modal-box">
+      <button class="modal-close-btn" id="close-studio-btn"><i class="ph ph-x"></i></button>
+
+      <div class="studio-modal-header">
+        <h2 style="font-family: var(--font-heading); font-size: 1.6rem; color: #fff; margin-bottom: 4px;">
+          <i class="ph ph-sparkle" style="color: var(--purple-bright); margin-right: 8px;"></i>
+          Creator Studio Vault
+        </h2>
+        <p style="color: var(--text-muted); font-size: 0.88rem;">Add new YouTube videos, upload photos, register apps, or store files in your database.</p>
+      </div>
+
+      <div class="studio-tabs-row">
+        <button class="studio-tab-btn active" data-tab="tab-video"><i class="ph ph-video"></i> Video</button>
+        <button class="studio-tab-btn" data-tab="tab-photo"><i class="ph ph-image"></i> Photo</button>
+        <button class="studio-tab-btn" data-tab="tab-app"><i class="ph ph-rocket-launch"></i> App</button>
+        <button class="studio-tab-btn" data-tab="tab-file"><i class="ph ph-file-arrow-up"></i> File</button>
+        <button class="studio-tab-btn" data-tab="tab-backup"><i class="ph ph-database"></i> Backup</button>
+      </div>
+
+      <div class="studio-modal-body">
+        <!-- 1. Video Tab -->
+        <div class="tab-pane active" id="tab-video">
+          <form id="form-add-video">
+            <div class="form-group">
+              <label class="form-label" for="video-title-input">Video Title *</label>
+              <input type="text" id="video-title-input" class="form-control" placeholder="e.g. Building an AI System in 2026" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="video-url-input">YouTube Video URL or Video ID *</label>
+              <input type="text" id="video-url-input" class="form-control" placeholder="https://www.youtube.com/watch?v=... or ID" required>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="form-group">
+                <label class="form-label" for="video-category-select">Category</label>
+                <select id="video-category-select" class="form-control">
+                  <option value="Coding & AI">Coding & AI</option>
+                  <option value="Tutorials">Tutorials</option>
+                  <option value="Gaming">Gaming</option>
+                  <option value="Tech Reviews">Tech Reviews</option>
+                  <option value="Shorts">Shorts</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="video-duration-input">Duration (optional)</label>
+                <input type="text" id="video-duration-input" class="form-control" placeholder="e.g. 15:30">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="video-desc-input">Description</label>
+              <textarea id="video-desc-input" class="form-control" placeholder="Brief details about what this video covers..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%;">
+              <i class="ph ph-check-bold"></i> Save Video to Hub
+            </button>
+          </form>
+        </div>
+
+        <!-- 2. Photo Tab -->
+        <div class="tab-pane" id="tab-photo">
+          <form id="form-add-photo">
+            <div class="form-group">
+              <label class="form-label" for="photo-title-input">Photo / Wallpaper Title *</label>
+              <input type="text" id="photo-title-input" class="form-control" placeholder="e.g. Cyber Cityscape Neon Glow" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="photo-category-select">Category</label>
+              <select id="photo-category-select" class="form-control">
+                <option value="3D Wallpapers">3D Wallpapers</option>
+                <option value="Cyberpunk">Cyberpunk</option>
+                <option value="Concept Art">Concept Art</option>
+                <option value="Personal">Personal</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="photo-file-input">Select Image File (PNG, JPG, WEBP) *</label>
+              <input type="file" id="photo-file-input" class="form-control" accept="image/*" required>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%;">
+              <i class="ph ph-upload-simple"></i> Upload to Gallery
+            </button>
+          </form>
+        </div>
+
+        <!-- 3. App Tab -->
+        <div class="tab-pane" id="tab-app">
+          <form id="form-add-app">
+            <div class="form-group">
+              <label class="form-label" for="app-name-input">Software / App Name *</label>
+              <input type="text" id="app-name-input" class="form-control" placeholder="e.g. Shivx Cyber Browser" required>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="form-group">
+                <label class="form-label" for="app-platform-select">Platform</label>
+                <select id="app-platform-select" class="form-control">
+                  <option value="Windows">Windows (.exe)</option>
+                  <option value="Web App">Web App</option>
+                  <option value="Android">Android (.apk)</option>
+                  <option value="Python">Python Script</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="app-version-input">Version</label>
+                <input type="text" id="app-version-input" class="form-control" placeholder="v1.0.0">
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="form-group">
+                <label class="form-label" for="app-download-input">Download URL</label>
+                <input type="text" id="app-download-input" class="form-control" placeholder="https://github.com/... or download link">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="app-demo-input">Live Demo URL (optional)</label>
+                <input type="text" id="app-demo-input" class="form-control" placeholder="https://your-demo-link.com">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="app-features-input">Key Features (comma-separated)</label>
+              <input type="text" id="app-features-input" class="form-control" placeholder="e.g. 60FPS UI, GPU Accelerated, Dark Mode">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="app-desc-input">Description</label>
+              <textarea id="app-desc-input" class="form-control" placeholder="Describe what makes this app special..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%;">
+              <i class="ph ph-check-bold"></i> Register App
+            </button>
+          </form>
+        </div>
+
+        <!-- 4. File Tab -->
+        <div class="tab-pane" id="tab-file">
+          <form id="form-add-file">
+            <div class="form-group">
+              <label class="form-label" for="file-upload-input">Select File to Vault *</label>
+              <input type="file" id="file-upload-input" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="file-desc-input">File Note / Description</label>
+              <input type="text" id="file-desc-input" class="form-control" placeholder="e.g. Production build archive for clients">
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%;">
+              <i class="ph ph-cloud-arrow-up"></i> Store File in Vault
+            </button>
+          </form>
+        </div>
+
+        <!-- 5. Backup Tab -->
+        <div class="tab-pane" id="tab-backup">
+          <div style="background: rgba(0, 0, 0, 0.35); padding: 22px; border-radius: var(--radius-md); margin-bottom: 20px; border: 1px solid rgba(168, 85, 247, 0.2);">
+            <h4 style="color: #fff; margin-bottom: 8px;"><i class="ph ph-export"></i> Export Entire Vault Backup</h4>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">Download a single JSON file containing all your custom video links, photos, apps, and files metadata.</p>
+            <button type="button" class="btn-secondary" id="btn-export-backup">
+              <i class="ph ph-download-simple"></i> Export Backup (JSON)
+            </button>
+          </div>
+
+          <div style="background: rgba(0, 0, 0, 0.35); padding: 22px; border-radius: var(--radius-md); border: 1px solid rgba(168, 85, 247, 0.2);">
+            <h4 style="color: #fff; margin-bottom: 8px;"><i class="ph ph-import"></i> Restore from Backup</h4>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">Restore your previous data on any browser or computer instantly.</p>
+            <input type="file" id="input-import-backup" accept=".json" class="form-control">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       CINEMATIC YOUTUBE VIDEO PLAYER MODAL
+       ======================================================================== -->
+  <div class="modal-backdrop video-player-modal" id="video-player-modal">
+    <div class="modal-box">
+      <button class="modal-close-btn" id="close-video-modal"><i class="ph ph-x"></i></button>
+      <div class="video-frame-container">
+        <iframe id="youtube-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <div style="padding: 22px 28px; background: var(--bg-secondary);">
+        <h3 id="video-modal-title" style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem;">Now Playing</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       FULLSCREEN LIGHTBOX MODAL
+       ======================================================================== -->
+  <div class="modal-backdrop lightbox-modal" id="lightbox-modal">
+    <div class="modal-box">
+      <button class="modal-close-btn" id="close-lightbox-btn"><i class="ph ph-x"></i></button>
+      <img id="lightbox-image" class="lightbox-img" src="" alt="Enlarged View">
+      <div class="lightbox-caption">
+        <span id="lightbox-title">Image Title</span>
+        <div style="margin-top: 8px;">
+          <span id="lightbox-category" class="video-category-tag">Category</span>
+          <a id="lightbox-download" href="#" download class="btn-file-download" style="margin-left: 12px;">
+            <i class="ph ph-download-simple"></i> Save Image
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       FLOATING ACTION BUTTON (QUICK UPLOAD)
+       ======================================================================== -->
+  <button class="fab-studio" title="Quick Upload Content">
+    <i class="ph ph-plus-circle-fill" style="font-size: 1.6rem;"></i>
+    <span>Upload Vault</span>
+  </button>
+
+  <!-- ========================================================================
+       FOOTER
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-logo" style="margin-bottom: 10px;">
+            <div class="logo-img-wrap" style="width: 40px; height: 40px;">
+              <img src="assets/images/tech_shivx_logo.png" alt="TECH SHIVX Logo" class="brand-emblem-img">
+            </div>
+            <span class="brand-name" style="font-size: 1.25rem;">TECH SHIVX</span>
+          </div>
+          <p>
+            An elite 3D cybernetic creative hub engineered for creator portfolios, YouTube streams, app ecosystems, and secure file preservation.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#hero">Home Core</a></li>
+            <li><a href="#videos-section">YouTube Hub</a></li>
+            <li><a href="#gallery-section">Wallpapers Gallery</a></li>
+            <li><a href="#apps-section">Applications</a></li>
+            <li><a href="#files-section">Files Vault</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Creator Ecosystem</h4>
+          <ul class="footer-links">
+            <li><a href="javascript:void(0)" onclick="openStudioTab('tab-video')">+ Add YouTube Video</a></li>
+            <li><a href="javascript:void(0)" onclick="openStudioTab('tab-photo')">+ Upload Picture</a></li>
+            <li><a href="javascript:void(0)" onclick="openStudioTab('tab-app')">+ Register New App</a></li>
+            <li><a href="javascript:void(0)" onclick="openStudioTab('tab-file')">+ Store File</a></li>
+            <li><a href="admin.html" target="_blank" style="color: var(--neon-cyan); font-weight: 700;"><i class="ph ph-shield-check"></i> Admin Portal</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Connect & Socials</h4>
+          <ul class="footer-links">
+            <li><a href="https://youtube.com" target="_blank" id="social-link-youtube" class="social-link-youtube"><i class="ph ph-youtube-logo" style="color: #ef4444;"></i> YouTube Channel</a></li>
+            <li><a href="https://instagram.com" target="_blank" id="social-link-instagram" class="social-link-instagram"><i class="ph ph-instagram-logo" style="color: #ec4899;"></i> Instagram</a></li>
+            <li><a href="https://x.com" target="_blank" id="social-link-twitter" class="social-link-twitter"><i class="ph ph-x-logo" style="color: #fff;"></i> Twitter (X)</a></li>
+            <li><a href="https://t.me" target="_blank" id="social-link-telegram" class="social-link-telegram"><i class="ph ph-telegram-logo" style="color: #38bdf8;"></i> Telegram</a></li>
+            <li><a href="https://wa.me/" target="_blank" id="social-link-whatsapp" class="social-link-whatsapp"><i class="ph ph-whatsapp-logo" style="color: #22c55e;"></i> WhatsApp</a></li>
+            <li><a href="https://discord.com" target="_blank" id="social-link-discord" class="social-link-discord"><i class="ph ph-discord-logo" style="color: #818cf8;"></i> Discord</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 TECH SHIVX. All rights reserved. Crafted with 3D WebGL & Cyber Purple Aesthetics.</span>
+        <span>
+          <a href="admin.html" target="_blank" style="color: var(--purple-bright); text-decoration: none; margin-right: 14px;">
+            <i class="ph ph-lock-key"></i> Admin Panel
+          </a>
+          Status: <strong style="color: var(--neon-cyan);">ONLINE</strong>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Javascript Modules -->
+  <script src="js/three-scene.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

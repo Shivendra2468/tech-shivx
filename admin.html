@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TECH SHIVX — Admin Master Control Center</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+  <!-- ========================================================================
+       1. ADMIN LOGIN VIEW
+       ======================================================================== -->
+  <div class="admin-login-wrapper" id="admin-login-view">
+    <div class="admin-login-card">
+      <img src="assets/images/tech_shivx_logo.png" alt="TECH SHIVX Logo" class="login-brand-logo">
+      <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 6px;">Admin Portal</h2>
+      <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 24px;">Enter your master administrative key to access the command center.</p>
+
+      <form id="admin-login-form">
+        <div class="admin-form-group" style="text-align: left;">
+          <label class="admin-form-label" for="admin-user-input">Username</label>
+          <input type="text" id="admin-user-input" class="admin-form-control" value="admin" required>
+        </div>
+        <div class="admin-form-group" style="text-align: left;">
+          <label class="admin-form-label" for="admin-pass-input">Master Password</label>
+          <input type="password" id="admin-pass-input" class="admin-form-control" placeholder="••••••••" required>
+        </div>
+        <div id="admin-login-error" style="display: none; color: #f43f5e; font-size: 0.82rem; margin-bottom: 16px;"></div>
+
+        <button type="submit" style="width: 100%; padding: 14px; border-radius: 12px; background: linear-gradient(135deg, #8b5cf6, #a855f7); border: none; color: #fff; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);">
+          Unlock Command Center
+        </button>
+      </form>
+
+      <div style="margin-top: 20px;">
+        <a href="index.html" style="color: var(--text-muted); font-size: 0.82rem; text-decoration: none;">&larr; Return to Website</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       2. ADMIN MASTER DASHBOARD VIEW
+       ======================================================================== -->
+  <div class="admin-app-layout" id="admin-app-view" style="display: none;">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <img src="assets/images/tech_shivx_logo.png" alt="TECH SHIVX Logo" class="sidebar-logo">
+        <div>
+          <span class="sidebar-brand-name">TECH SHIVX</span>
+          <span class="sidebar-badge">ADMIN CONTROL</span>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li>
+          <button class="sidebar-item-btn active" data-admin-tab="pane-overview">
+            <i class="ph ph-chart-pie-slice" style="font-size: 1.2rem;"></i>
+            <span>Overview & Stats</span>
+          </button>
+        </li>
+        <li>
+          <button class="sidebar-item-btn" data-admin-tab="pane-logs">
+            <i class="ph ph-download-simple" style="font-size: 1.2rem;"></i>
+            <span>Download Audit Logs</span>
+          </button>
+        </li>
+        <li>
+          <button class="sidebar-item-btn" data-admin-tab="pane-subscribers">
+            <i class="ph ph-users" style="font-size: 1.2rem;"></i>
+            <span>Subscribers & Users</span>
+          </button>
+        </li>
+        <li>
+          <button class="sidebar-item-btn" data-admin-tab="pane-customizer">
+            <i class="ph ph-paint-brush" style="font-size: 1.2rem;"></i>
+            <span>Site Customizer</span>
+          </button>
+        </li>
+        <li>
+          <button class="sidebar-item-btn" data-admin-tab="pane-content">
+            <i class="ph ph-folder" style="font-size: 1.2rem;"></i>
+            <span>Content Vault</span>
+          </button>
+        </li>
+        <li>
+          <button class="sidebar-item-btn" data-admin-tab="pane-backup">
+            <i class="ph ph-database" style="font-size: 1.2rem;"></i>
+            <span>Backup & Data</span>
+          </button>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <a href="index.html" style="display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.88rem; text-decoration: none; margin-bottom: 12px;">
+          <i class="ph ph-arrow-square-out"></i> Live Website
+        </a>
+        <button id="admin-logout-btn" style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(244, 63, 94, 0.15); border: 1px solid rgba(244, 63, 94, 0.3); color: #f43f5e; cursor: pointer; font-size: 0.85rem; font-weight: 600;">
+          <i class="ph ph-sign-out"></i> Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Topbar -->
+      <div class="admin-topbar">
+        <div>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; color: var(--admin-cyan);">SYSTEM STATUS: ONLINE // PRIVILEGED ACCESS</span>
+          <h1 class="page-heading">Platform Command Hub</h1>
+        </div>
+        <div class="admin-nav-actions">
+          <a href="index.html" target="_blank" style="padding: 10px 18px; border-radius: 10px; background: rgba(168, 85, 247, 0.2); border: 1px solid var(--admin-border); color: #fff; text-decoration: none; font-size: 0.88rem; display: flex; align-items: center; gap: 6px;">
+            <i class="ph ph-globe"></i> View Website
+          </a>
+        </div>
+      </div>
+
+      <!-- PANE 1: OVERVIEW -->
+      <div class="admin-view-pane" id="pane-overview">
+        <!-- Metric Cards -->
+        <div class="admin-metrics-grid">
+          <div class="admin-metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Total Site Views</span>
+              <div class="metric-icon-box"><i class="ph ph-eye"></i></div>
+            </div>
+            <div class="metric-value" id="metric-views">0</div>
+            <small style="color: var(--admin-cyan); font-size: 0.75rem;">Recorded via visits</small>
+          </div>
+
+          <div class="admin-metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Registered Subscribers</span>
+              <div class="metric-icon-box" style="color: var(--admin-green); border-color: rgba(34, 197, 94, 0.4);"><i class="ph ph-user-check"></i></div>
+            </div>
+            <div class="metric-value" id="metric-subs">0</div>
+            <small style="color: var(--admin-green); font-size: 0.75rem;">Verified emails</small>
+          </div>
+
+          <div class="admin-metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Total Downloads</span>
+              <div class="metric-icon-box" style="color: #e879f9; border-color: rgba(232, 121, 249, 0.4);"><i class="ph ph-download-simple"></i></div>
+            </div>
+            <div class="metric-value" id="metric-downloads">0</div>
+            <small style="color: #e879f9; font-size: 0.75rem;">Protected downloads</small>
+          </div>
+
+          <div class="admin-metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Vault Resources</span>
+              <div class="metric-icon-box" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4);"><i class="ph ph-cube"></i></div>
+            </div>
+            <div class="metric-value" id="metric-vault-items">0</div>
+            <small style="color: #38bdf8; font-size: 0.75rem;">Videos, pics, apps, files</small>
+          </div>
+        </div>
+
+        <!-- Recent Downloads Table -->
+        <div class="admin-section-box">
+          <div class="section-box-header">
+            <div class="section-box-title">
+              <i class="ph ph-clock-counter-clockwise" style="color: var(--admin-bright);"></i>
+              <span>Recent Download Activity</span>
+            </div>
+            <button class="sidebar-item-btn" style="width: auto; padding: 6px 14px; font-size: 0.8rem;" onclick="document.querySelector('[data-admin-tab=pane-logs]').click()">
+              View Full Logs &rarr;
+            </button>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>User Email</th>
+                  <th>Resource Name</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="overview-recent-logs-body">
+                <!-- Populated via admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANE 2: DOWNLOAD AUDIT LOGS -->
+      <div class="admin-view-pane" id="pane-logs" style="display: none;">
+        <div class="admin-section-box">
+          <div class="section-box-header">
+            <div class="section-box-title">
+              <i class="ph ph-list-dashes" style="color: var(--admin-bright);"></i>
+              <span>Complete Download Audit Trail</span>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Real-time log of users downloading files & apps</span>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Date & Time</th>
+                  <th>Subscriber Email</th>
+                  <th>Item Name</th>
+                  <th>Category</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="full-download-logs-body">
+                <!-- Populated via admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANE 3: SUBSCRIBERS & USERS -->
+      <div class="admin-view-pane" id="pane-subscribers" style="display: none;">
+        <div class="admin-section-box">
+          <div class="section-box-header">
+            <div class="section-box-title">
+              <i class="ph ph-users-three" style="color: var(--admin-bright);"></i>
+              <span>Subscribers & Registered Community</span>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">All users registered or subscribed via email</span>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email Address</th>
+                  <th>Date Registered</th>
+                  <th>Origin</th>
+                </tr>
+              </thead>
+              <tbody id="subscribers-table-body">
+                <!-- Populated via admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANE 4: SITE CUSTOMIZER -->
+      <div class="admin-view-pane" id="pane-customizer" style="display: none;">
+        <div class="admin-section-box">
+          <div class="section-box-header">
+            <div class="section-box-title">
+              <i class="ph ph-paint-brush-broad" style="color: var(--admin-bright);"></i>
+              <span>Site Design & Content Customizer</span>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Change text, announcements, and ad monetization settings</span>
+          </div>
+
+          <form id="site-customizer-form">
+            <div class="admin-form-group">
+              <label class="admin-form-label" for="custom-hero-title">Hero Main Headline</label>
+              <textarea id="custom-hero-title" class="admin-form-control" rows="2"></textarea>
+            </div>
+
+            <div class="admin-form-group">
+              <label class="admin-form-label" for="custom-hero-subtitle">Hero Subtitle Description</label>
+              <textarea id="custom-hero-subtitle" class="admin-form-control" rows="3"></textarea>
+            </div>
+
+            <div class="admin-form-group">
+              <label class="admin-form-label" for="custom-announcement">Top Notification / Announcement Text</label>
+              <input type="text" id="custom-announcement" class="admin-form-control">
+            </div>
+
+            <!-- Social Media & Community Channels -->
+            <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 14px; margin-bottom: 22px; border: 1px solid var(--admin-border);">
+              <h4 style="color: #fff; font-family: 'Outfit', sans-serif; font-size: 1.1rem; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                <i class="ph ph-share-network" style="color: var(--admin-bright);"></i>
+                <span>Social Media & Community Links</span>
+              </h4>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="admin-form-group">
+                  <label class="admin-form-label"><i class="ph ph-youtube-logo" style="color: #ef4444;"></i> YouTube Channel URL</label>
+                  <input type="url" id="custom-social-youtube" class="admin-form-control" placeholder="https://youtube.com/@yourchannel">
+                </div>
+                <div class="admin-form-group">
+                  <label class="admin-form-label"><i class="ph ph-instagram-logo" style="color: #ec4899;"></i> Instagram Profile URL</label>
+                  <input type="url" id="custom-social-instagram" class="admin-form-control" placeholder="https://instagram.com/yourprofile">
+                </div>
+                <div class="admin-form-group">
+                  <label class="admin-form-label"><i class="ph ph-x-logo" style="color: #fff;"></i> Twitter / X Profile URL</label>
+                  <input type="url" id="custom-social-twitter" class="admin-form-control" placeholder="https://x.com/yourhandle">
+                </div>
+                <div class="admin-form-group">
+                  <label class="admin-form-label"><i class="ph ph-telegram-logo" style="color: #38bdf8;"></i> Telegram Channel URL</label>
+                  <input type="url" id="custom-social-telegram" class="admin-form-control" placeholder="https://t.me/yourchannel">
+                </div>
+                <div class="admin-form-group">
+                  <label class="admin-form-label"><i class="ph ph-whatsapp-logo" style="color: #22c55e;"></i> WhatsApp Chat / Group URL</label>
+                  <input type="url" id="custom-social-whatsapp" class="admin-form-control" placeholder="https://wa.me/1234567890 or group link">
+                </div>
+                <div class="admin-form-group">
+                  <label class="admin-form-label"><i class="ph ph-discord-logo" style="color: #818cf8;"></i> Discord Server URL</label>
+                  <input type="url" id="custom-social-discord" class="admin-form-control" placeholder="https://discord.gg/yourserver">
+                </div>
+              </div>
+            </div>
+
+            <!-- Monetization / Ads Toggle -->
+            <div style="background: rgba(0,0,0,0.3); padding: 18px; border-radius: 12px; margin-bottom: 22px; border: 1px solid var(--admin-border);">
+              <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                <input type="checkbox" id="custom-ads-toggle" style="width: 20px; height: 20px; accent-color: var(--admin-purple);">
+                <div>
+                  <strong style="color: #fff; font-size: 1rem;">Enable AdSense Monetization Banners</strong>
+                  <p style="color: var(--text-muted); font-size: 0.82rem;">Displays standard leaderboard and in-feed advertisement placements on the live site.</p>
+                </div>
+              </label>
+            </div>
+
+            <!-- Admin Password Change -->
+            <div class="admin-form-group">
+              <label class="admin-form-label" for="custom-admin-password">Change Admin Master Password</label>
+              <input type="password" id="custom-admin-password" class="admin-form-control" placeholder="Leave blank to keep current password">
+            </div>
+
+            <button type="submit" style="padding: 14px 28px; border-radius: 12px; background: linear-gradient(135deg, #8b5cf6, #a855f7); border: none; color: #fff; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);">
+              Save & Apply Changes Live
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- PANE 5: CONTENT VAULT MANAGER -->
+      <div class="admin-view-pane" id="pane-content" style="display: none;">
+        <div class="admin-section-box">
+          <div class="section-box-header">
+            <div class="section-box-title">
+              <i class="ph ph-film-strip" style="color: var(--admin-bright);"></i>
+              <span>Manage YouTube Videos</span>
+            </div>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr><th>Title</th><th>Category</th><th>Action</th></tr>
+            </thead>
+            <tbody id="manage-videos-body"></tbody>
+          </table>
+        </div>
+
+        <div class="admin-section-box">
+          <div class="section-box-header">
+            <div class="section-box-title">
+              <i class="ph ph-image" style="color: var(--admin-bright);"></i>
+              <span>Manage Photos & Wallpapers</span>
+            </div>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr><th>Title</th><th>Category</th><th>Action</th></tr>
+            </thead>
+            <tbody id="manage-photos-body"></tbody>
+          </table>
+        </div>
+
+        <div class="admin-section-box">
+          <div class="section-box-header">
+            <div class="section-box-title">
+              <i class="ph ph-rocket-launch" style="color: var(--admin-bright);"></i>
+              <span>Manage Software & Apps</span>
+            </div>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr><th>Name</th><th>Platform</th><th>Action</th></tr>
+            </thead>
+            <tbody id="manage-apps-body"></tbody>
+          </table>
+        </div>
+
+        <div class="admin-section-box">
+          <div class="section-box-header">
+            <div class="section-box-title">
+              <i class="ph ph-hard-drive" style="color: var(--admin-bright);"></i>
+              <span>Manage Files & Downloads</span>
+            </div>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr><th>Name</th><th>Format</th><th>Action</th></tr>
+            </thead>
+            <tbody id="manage-files-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PANE 6: BACKUP & DATA -->
+      <div class="admin-view-pane" id="pane-backup" style="display: none;">
+        <div class="admin-section-box">
+          <div class="section-box-header">
+            <div class="section-box-title">
+              <i class="ph ph-database" style="color: var(--admin-bright);"></i>
+              <span>Master Vault Data Export & Import</span>
+            </div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Backup all user accounts, download logs, subscribers, and content as a single JSON file.</p>
+          <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+            <button id="admin-export-backup-btn" style="padding: 12px 24px; border-radius: 10px; background: rgba(168, 85, 247, 0.25); border: 1px solid var(--admin-border); color: #fff; font-weight: 600; cursor: pointer;">
+              <i class="ph ph-download-simple"></i> Export All Data (JSON)
+            </button>
+            <label style="padding: 12px 24px; border-radius: 10px; background: rgba(56, 189, 248, 0.2); border: 1px solid rgba(56, 189, 248, 0.4); color: #fff; font-weight: 600; cursor: pointer;">
+              <i class="ph ph-upload-simple"></i> Restore Backup (JSON)
+              <input type="file" id="admin-import-backup-input" accept=".json" style="display: none;">
+            </label>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Javascript Modules -->
+  <script src="js/storage.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
